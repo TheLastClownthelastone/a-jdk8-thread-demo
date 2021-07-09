@@ -2,8 +2,14 @@ package com.pt.jdk8.function;
 
 import org.junit.Test;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * @author nate-pt
@@ -14,7 +20,7 @@ import java.util.function.BiFunction;
 public class BiConsumerTest {
 
     @Test
-    public void exec1(){
+    public void exec1() {
         BiConsumer biConsumer = new BiConsumer() {
             @Override
             public void accept(Object o, Object o2) {
@@ -23,11 +29,11 @@ public class BiConsumerTest {
             }
         };
 
-        biConsumer.accept("1",2);
+        biConsumer.accept("1", 2);
     }
 
     @Test
-    public void exec2(){
+    public void exec2() {
         String s = "1234,,44";
         System.out.println(s);
         BiFunction<CharSequence, CharSequence, String> charSequenceCharSequenceStringBiFunction = s::replace;
@@ -35,15 +41,36 @@ public class BiConsumerTest {
     }
 
     @Test
-    public void exec3(){
+    public void exec3() {
         String string = "String";
         StringC c = string::getChars;
-        c.getChars(1,2,"ri".toCharArray(),0);
+        c.getChars(1, 2, "ri".toCharArray(), 0);
         System.out.println(string);
     }
 
     @FunctionalInterface
-    interface StringC<a,b,c,d>{
+    interface StringC<a, b, c, d> {
         void getChars(int srcBegin, int srcEnd, char dst[], int dstBegin);
+    }
+
+    @Test
+    public void exec4() {
+        Serializable serializable = Stream.of("2", 3, 2.1).reduce(Objects::equals).get();
+
+        System.out.println(serializable);
+    }
+
+    @Test
+    public void exec5() {
+        // 调用boxed类型先将基础类型进行转换
+        List<Integer> collect = IntStream.of(1, 2, 3).boxed().filter(BiConsumerTest::check).collect(Collectors.toList());
+        System.out.println(collect);
+    }
+
+    public static boolean check(Integer a) {
+        if (a >= 3) {
+            return true;
+        }
+        return false;
     }
 }
