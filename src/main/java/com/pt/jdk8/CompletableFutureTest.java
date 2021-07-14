@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 /**
  * @author nate-pt
@@ -217,6 +218,37 @@ public class CompletableFutureTest {
                     System.out.println(r);
                     System.out.println(e);
                 });
+    }
+
+    /**
+     * join方法
+     * join方法不会抛出异常
+     * get方法会抛出异常
+     */
+    @Test
+    public void exec10() throws ExecutionException, InterruptedException {
+        Integer join = CompletableFuture.supplyAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return 3 / 1;
+        })
+                .thenApply(i -> i * 3).join();
+
+        System.out.println("join:"+join);
+
+        Integer integer = CompletableFuture.supplyAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return 2 / 2;
+        }).thenApply(i -> i * 3).get();
+
+        System.out.println("integer:"+integer);
     }
 
 }
