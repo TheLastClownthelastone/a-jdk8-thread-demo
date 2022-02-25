@@ -229,6 +229,7 @@ public class CompletableFutureTest {
     public void exec10() throws ExecutionException, InterruptedException {
         Integer join = CompletableFuture.supplyAsync(() -> {
             try {
+                System.out.println("当前线程为："+Thread.currentThread().getName());
                 TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -249,6 +250,25 @@ public class CompletableFutureTest {
         }).thenApply(i -> i * 3).get();
 
         System.out.println("integer:"+integer);
+        System.out.println("当前线程为："+Thread.currentThread().getName());
     }
 
+
+    @Test
+    public void test11() throws InterruptedException, ExecutionException {
+
+        CompletableFuture<String> stringCompletableFuture = CompletableFuture.supplyAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("异步线程："+Thread.currentThread().getName());
+            return "222";
+        });
+        TimeUnit.SECONDS.sleep(2);
+        System.out.println("主线程执行：" + Thread.currentThread().getName());
+        String s = stringCompletableFuture.get();
+        System.out.println(s);
+    }
 }

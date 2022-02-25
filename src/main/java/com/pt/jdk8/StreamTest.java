@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -36,11 +37,25 @@ public class StreamTest {
     @Test
     public void exec3(){
         Serializable reduce = Stream.of("1", 2, "3").reduce("2", ((s, serializable) -> {
-            System.out.println(s);
-            System.out.println(serializable);
+//            System.out.println(s);
+//            System.out.println(serializable);
             return s;
         }));
 
         System.out.println(reduce);
+    }
+
+
+    @Test
+    public void reduceTest() {
+        Optional accResult = Stream.of(1, 2, 3, 4).reduce((acc, item) -> {
+            System.out.println("acc : " + acc);
+            acc += item;
+            System.out.println("item: " + item);
+            System.out.println("acc+ : " + acc);
+            System.out.println("--------");
+            return acc;
+        });
+        System.out.println(accResult);
     }
 }
