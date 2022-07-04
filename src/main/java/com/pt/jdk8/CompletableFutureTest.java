@@ -19,8 +19,14 @@ public class CompletableFutureTest {
     @Test
     public void exec1(){
         CompletableFuture.
-                supplyAsync(()->1)
-                .thenApply(i->i+1)
+                supplyAsync(()->{
+                    System.out.println("supplyAsync 线程为："+Thread.currentThread().getName());
+                    return 1;
+                })
+                .thenApply(i->{
+                    System.out.println("thenApply 线程为："+Thread.currentThread().getName());
+                    return i+1;
+                })
                 .thenApply(i->i*i)
                 .whenComplete((r,e)->System.out.println("当前线程为："+Thread.currentThread().getName()+" 结果r:"+r+
                         " 结果e:"+e));
@@ -35,14 +41,15 @@ public class CompletableFutureTest {
             try {
                 TimeUnit.SECONDS.sleep(2);
                 System.out.println("当前线程 :"+ Thread.currentThread().getName());
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return 3.1;
         });
         try {
-            System.out.println("当前线程 :"+ Thread.currentThread().getName());
             Double aDouble = doubleCompletableFuture.get();
+            TimeUnit.SECONDS.sleep(3);
+            System.out.println("当前线程 :"+ Thread.currentThread().getName());
             System.out.println(aDouble);
         } catch (InterruptedException e) {
             e.printStackTrace();

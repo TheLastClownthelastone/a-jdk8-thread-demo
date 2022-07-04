@@ -2,9 +2,7 @@ package com.pt.jdk8;
 
 import org.junit.Test;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -40,7 +38,7 @@ public class IntStreamTest {
      */
     @Test
     public void exec3() {
-        boolean b = IntStream.of(2, 4, 5).anyMatch(value -> value > 3);
+        boolean b = IntStream.of(2, 4, 5).anyMatch(value -> value > 8);
         System.out.println(b);
     }
 
@@ -112,8 +110,14 @@ public class IntStreamTest {
      */
     @Test
     public void exec11() {
-        int asInt = IntStream.of(1, 2, 3, 6, 4).filter(i -> i > 3).findAny().getAsInt();
+        int asInt = IntStream.of(1, 2, 3, 6, 4).filter(i -> i > 1).findAny().getAsInt();
         System.out.println(asInt);
+//        int asInt1 = IntStream.of(1, 2, 3, 6, 4).filter(i -> i > 1).findAny().getAsInt();
+//        System.out.println(asInt1);
+
+        System.out.println(IntStream.range(0, 100).parallel().findAny().getAsInt());
+        System.out.println(IntStream.range(0, 100).parallel().findAny().getAsInt());
+        System.out.println(IntStream.range(0, 100).parallel().findAny().getAsInt());
     }
 
     /**
@@ -121,7 +125,7 @@ public class IntStreamTest {
      */
     @Test
     public void exec12() {
-        int asInt = IntStream.of(1, 2, 3, 5, 6).filter(i -> i > 3).findFirst().getAsInt();
+        int asInt = IntStream.of(1, 2, 3,6,5).filter(i -> i > 3).findFirst().getAsInt();
         System.out.println(asInt);
     }
 
@@ -161,7 +165,7 @@ public class IntStreamTest {
      */
     @Test
     public void exec16() {
-        IntStream.iterate(1, i -> i + 3).limit(3).forEach(System.out::println);
+        IntStream.iterate(1, i -> i + 3).limit(5).forEach(System.out::println);
     }
 
     /**
@@ -200,7 +204,7 @@ public class IntStreamTest {
      */
     @Test
     public void exec19(){
-        IntStream.of(1,3,5,4).skip(4).forEach(System.out::println);
+        IntStream.of(1,3,5,4).skip(0).forEach(System.out::println);
     }
 
     /**

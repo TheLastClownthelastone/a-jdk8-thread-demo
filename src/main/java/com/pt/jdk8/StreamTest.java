@@ -27,25 +27,28 @@ public class StreamTest {
 
     @Test
     public void exec2(){
-        List<Double> collect = Stream.generate(() -> new Random().nextDouble() * 12).limit(3).collect(Collectors.toList());
+        List<Double> collect = Stream.generate(() -> new Random().nextDouble() * 12).limit(3).sorted().collect(Collectors.toList());
         System.out.println(collect);
     }
 
     /**
-     * 合并流
+     * 合并流 加入初始值
      */
     @Test
     public void exec3(){
-        Serializable reduce = Stream.of("1", 2, "3").reduce("2", ((s, serializable) -> {
-//            System.out.println(s);
-//            System.out.println(serializable);
-            return s;
+        Serializable reduce = Stream.of("1", "2", "3","4","5").reduce("2", ((s, serializable) -> {
+            System.out.println(s);
+            System.out.println(serializable);
+            return serializable;
         }));
 
         System.out.println(reduce);
     }
 
 
+    /**
+     * 合并流无初始值
+     */
     @Test
     public void reduceTest() {
         Optional accResult = Stream.of(1, 2, 3, 4).reduce((acc, item) -> {
@@ -56,6 +59,6 @@ public class StreamTest {
             System.out.println("--------");
             return acc;
         });
-        System.out.println(accResult);
+        System.out.println(accResult.get());
     }
 }

@@ -23,7 +23,7 @@ public class ConsumerTest {
         Consumer consumer1 = n -> System.out.println(n + "-consumer1");
 
         //执行完consumer之后在执行consumer1
-        consumer.andThen(consumer1).accept("test");
+        //consumer.andThen(consumer1).accept("test");
 
         // 连续执行accept方法
         consumer.andThen(consumer).andThen(consumer).andThen(consumer).accept("test");

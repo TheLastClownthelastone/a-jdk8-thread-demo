@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -73,4 +75,30 @@ public class BiConsumerTest {
         }
         return false;
     }
+
+    @Test
+    public void exec7(){
+        Function function = new Function() {
+            @Override
+            public Object apply(Object o) {
+                return "3";
+            }
+        };
+
+        System.out.println(function.apply(3));
+
+
+
+    }
+
+
+
+
+
+
+}
+
+@FunctionalInterface
+interface MyFuction<T,E>{
+     T doing(E a);
 }
